@@ -50,7 +50,7 @@ public class UsuarioController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
-    service.deleteUser(id);
+    service.deleteUsuario(id);
     return ResponseEntity.noContent().build();
   }
 

@@ -24,8 +24,7 @@ public class UsuarioService {
 
   @Transactional
   public Usuario saveUsuario(Usuario usuario) {
-    Usuario usuariodb = repository.save(usuario);
-    return usuariodb;
+    return repository.save(usuario);
   }
 
   @Transactional
@@ -37,7 +36,7 @@ public class UsuarioService {
 
     return repository.save(usuario);
   }
-
+  
   public List<Usuario> listarUsuario() {
     return repository.findAll();
   }
@@ -50,7 +49,7 @@ public class UsuarioService {
   }
 
   @Transactional
-  public void deleteUser(Long id) {
+  public void deleteUsuario(Long id) {
     Optional<Usuario> usuarioOpt = repository.findById(id);
     Usuario usuario = usuarioOpt.orElseThrow(() -> new EntityNotFoundException("Usuario não encontrado"));
 

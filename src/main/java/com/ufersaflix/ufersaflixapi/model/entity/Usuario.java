@@ -25,29 +25,28 @@ public class Usuario {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id; 
-  UUID uuid;
+  private Long id;
+  private UUID uuid;
 
-  @NotBlank (message = "Insira um nome de usuário válido")
-  String nome;
+  @NotBlank(message = "Insira um nome de usuário válido")
+  private String nome;
 
   @Column(unique = true)
   @NotBlank
-  @Email (message = "Insira um email válido")
-  String email;
+  @Email(message = "Insira um email válido")
+  private String email;
 
   @NotBlank
-  @Size (min = 6, max = 20 ,message = "A senha tem que ter de 6 a 20 caracteres")
-  String senha;
+  @Size(min = 6, max = 20, message = "A senha tem que ter de 6 a 20 caracteres")
+  private String senha;
 
-
-  boolean adm;
+  private boolean adm;
 
   public Usuario() {
     uuid = UUID.randomUUID();
   }
 
-  public void converte(Usuario dto){
+  public void converte(Usuario dto) {
     setNome(dto.getNome());
     setEmail(dto.getEmail());
     setSenha(dto.getSenha());
