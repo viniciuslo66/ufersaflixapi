@@ -5,12 +5,14 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufersaflix.ufersaflixapi.model.entity.Usuario;
@@ -21,35 +23,35 @@ import com.ufersaflix.ufersaflixapi.service.UsuarioService;
 public class UsuarioController {
 
   @Autowired
-  UsuarioService service;
+  private UsuarioService service;
 
   @GetMapping
-  public List<Usuario> listar() {
-    return service.listarUsuario();
+  public ResponseEntity<List<Usuario>> listarUsuario() {
+    return ResponseEntity.ok().body(service.listarUsuario());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Usuario> findById(@PathVariable Long id) {
+    Usuario usuario = service.findById(id);
+    return ResponseEntity.ok().body(usuario);
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public Usuario salvarUsuario(@Valid @RequestBody Usuario usuario) {
-    return service.saveUsuario(usuario);
-  }
-  
-  /*
-  @GetMapping("/{usuarioId}")
-  public ResponseEntity<Usuario> buscar(@PathVariable Long usuarioId) {
-    return repository.findById(usuarioId)
-    .map(ResponseEntity::ok)
-    .orElse(ResponseEntity.notFound().build());
+  public ResponseEntity<Usuario> salvarUsuario(@RequestBody @Valid Usuario usuario) {
+    Usuario dto = service.saveUsuario(usuario);
+    return ResponseEntity.ok().body(dto);
   }
 
-  @PutMapping("/{usuarioId}")
-  public ResponseEntity<Usuario> Atualizar(@PathVariable Long usuarioId, @RequestBody Usuario usuario) {
-    if (!repository.existsById(usuarioId)) {
-      return ResponseEntity.notFound().build();
-    }
-    usuario = repository.save(usuario);
-    return ResponseEntity.ok(usuario);
+  @PutMapping("/{id}")
+  public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody @Valid Usuario usuario) {
+    Usuario usuarioDTO = service.update(id, usuario);
+    return ResponseEntity.ok().body(usuarioDTO);
   }
 
-  */
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
+    service.deleteUser(id);
+    return ResponseEntity.noContent().build();
+  }
+
 }
