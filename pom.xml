@@ -10,7 +10,7 @@
 	<groupId>com.ufersaflix</groupId>
 	<artifactId>ufersaflixapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>ufersaflixapi</name>
 	<description>Aplicativo de streaming de vídeo</description>
 	<properties>
