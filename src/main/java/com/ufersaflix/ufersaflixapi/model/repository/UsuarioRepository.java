@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ufersaflix.ufersaflixapi.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
+  public Usuario findUsuarioByEmail(String email);
 }

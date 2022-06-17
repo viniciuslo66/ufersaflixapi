@@ -1,14 +1,17 @@
 package com.ufersaflix.ufersaflixapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ufersaflix.ufersaflixapi.api.dto.UsuarioDto;
 import com.ufersaflix.ufersaflixapi.model.entity.Usuario;
 import com.ufersaflix.ufersaflixapi.model.repository.UsuarioRepository;
 
@@ -18,13 +21,17 @@ public class UsuarioService {
   @Autowired
   UsuarioRepository repository;
 
+  @Autowired
+  private ModelMapper mapper;
+
+
   public UsuarioService(UsuarioRepository repository) {
     this.repository = repository;
   }
 
   @Transactional
-  public Usuario saveUsuario(Usuario usuario) {
-    return repository.save(usuario);
+  public UsuarioDto saveUsuario(Usuario usuario) {
+    return mapper.map(repository.save(usuario), UsuarioDto.class);
   }
 
   @Transactional
@@ -37,8 +44,12 @@ public class UsuarioService {
     return repository.save(usuario);
   }
   
-  public List<Usuario> listarUsuario() {
-    return repository.findAll();
+  public List<UsuarioDto> listarUsuario() {
+    List<UsuarioDto> list = new ArrayList<UsuarioDto>();
+    for (Usuario usuario : repository.findAll()) {
+      list.add(mapper.map(usuario, UsuarioDto.class));
+    }
+    return list;
   }
 
   @Transactional(readOnly = true)

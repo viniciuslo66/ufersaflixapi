@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufersaflix.ufersaflixapi.api.dto.UsuarioDto;
 import com.ufersaflix.ufersaflixapi.model.entity.Usuario;
 import com.ufersaflix.ufersaflixapi.service.UsuarioService;
 
@@ -26,7 +27,7 @@ public class UsuarioController {
   private UsuarioService service;
 
   @GetMapping
-  public ResponseEntity<List<Usuario>> listarUsuario() {
+  public ResponseEntity<List<UsuarioDto>> listarUsuario() {
     return ResponseEntity.ok().body(service.listarUsuario());
   }
 
@@ -37,9 +38,8 @@ public class UsuarioController {
   }
 
   @PostMapping
-  public ResponseEntity<Usuario> salvarUsuario(@RequestBody @Valid Usuario usuario) {
-    Usuario dto = service.saveUsuario(usuario);
-    return ResponseEntity.ok().body(dto);
+  public ResponseEntity<UsuarioDto> salvarUsuario(@RequestBody @Valid Usuario usuario) {
+    return ResponseEntity.ok().body(service.saveUsuario(usuario));
   }
 
   @PutMapping("/{id}")
